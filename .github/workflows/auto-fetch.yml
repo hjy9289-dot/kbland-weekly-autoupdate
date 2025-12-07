@@ -2,8 +2,8 @@ name: Auto Fetch KB Weekly Excel
 
 on:
   schedule:
-    - cron: '0 0 * * 1'   # 매주 월요일 00:00 자동 실행
-  workflow_dispatch:      # 수동 실행도 가능
+    - cron: '0 0 * * 1'
+  workflow_dispatch:
 
 jobs:
   update:
