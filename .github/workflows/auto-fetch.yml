@@ -1,0 +1,35 @@
+name: Auto Fetch KB Weekly Excel
+
+on:
+  schedule:
+    - cron: '0 0 * * 1'
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Fetch Latest Excel
+        run: node scripts/fetchExcel.js
+
+      - name: Parse Excel → JSON  
+        run: node scripts/parseExcel.js
+
+      - name: Commit & Push
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add .
+          git commit -m "KB Weekly Excel Auto Update" || echo "No changes"
+          git push
