@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>KB Weekly Auto Update</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    th { background: #f7f7f7; }
+  </style>
+</head>
+<body>
+
+<h2>📈 KB 주간 시계열 자동 업데이트</h2>
+<p>매주 자동으로 갱신됩니다.</p>
+
+<div id="table">Loading...</div>
+
+<script>
+async function loadTable() {
+  const res = await fetch("../data/weekly.json");
+  const data = await res.json();
+
+  let html = "<table><tr>";
+
+  const keys = Object.keys(data[0]);
+  keys.forEach(k => html += `<th>${k}</th>`);
+  html += "</tr>";
+
+  data.forEach(row => {
+    html += "<tr>";
+    keys.forEach(k => html += `<td>${row[k]}</td>`);
+    html += "</tr>";
+  });
+
+  html += "</table>";
+
+  document.getElementById("table").innerHTML = html;
+}
+
+loadTable();
+</script>
+
+</body>
+</html>
