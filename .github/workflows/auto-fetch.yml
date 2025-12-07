@@ -5,6 +5,9 @@ on:
     - cron: '0 0 * * 1'
   workflow_dispatch:
 
+permissions:
+  contents: write # Git 쓰기 권한 부여
+
 jobs:
   update:
     runs-on: ubuntu-latest
